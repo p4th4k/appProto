@@ -17,6 +17,7 @@ class Message:
         self._jsonheader_len = None
         self.jsonheader = None
         self.response = None
+        self.msgToPrint = ""
 
     def _set_selector_events_mask(self, mode):
         """Set selector to listen for events: mode is 'r', 'w', or 'rw'."""
@@ -54,7 +55,11 @@ class Message:
                 pass
             else:
                 self._send_buffer = self._send_buffer[sent:]
-                self._request_queued = False
+                print(self.msgToPrint)
+                if not self._send_buffer:
+                    self._request_queued = False
+                    self._set_selector_events_mask("r")
+
 
     def _json_encode(self, obj, encoding):
         return json.dumps(obj, ensure_ascii=False).encode(encoding)
@@ -79,6 +84,16 @@ class Message:
         jsonheader_bytes = self._json_encode(jsonheader, "utf-8")
         message_hdr = struct.pack(">H", len(jsonheader_bytes))
         message = message_hdr + jsonheader_bytes + content_bytes
+        self.msgToPrint = f"""
+        Header Length: {len(jsonheader_bytes)}
+        [Header]
+        - Byte-order: {sys.byteorder}
+        - Content-type: {content_type}
+        - Content-encoding: {content_encoding}
+        - Content-Length: {len(content_bytes)}
+        [Body]
+        - {self.request["content"]}
+        """
         return message
 
     def _create_request(self):
@@ -129,11 +144,6 @@ class Message:
             self.queue_request()
 
         self._write()
-
-        if self._request_queued:
-            if not self._send_buffer:
-                # Set selector to listen for read events, we're done writing.
-                self._set_selector_events_mask("r")
 
     def close(self):
         print(f"Closing connection to {self.addr}\n")
@@ -213,8 +223,12 @@ class Message:
             '''
             print(message)
 
-            # Return when response has been processed
-            self.write()
+            self._jsonheader_len = None
+            self.jsonheader = None
+            self.response = None
+
+            # Listen for writes again
+            self._set_selector_events_mask("w")
 
 '''
 Program Flow:
