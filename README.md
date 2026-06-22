@@ -2,8 +2,6 @@
 
 A custom application layer protocol implemented in a multi-user client-server architecture using python sockets and selectors.
 
----
-
 ## Table Of Contents
 
 - [Features](#features)
@@ -16,7 +14,6 @@ A custom application layer protocol implemented in a multi-user client-server ar
 - [Learning Outcomes](#learning-outcomes)
 - [Future Improvements](#future-improvements)
 
----
 
 ## Features
 - Custom application layer protocol design
