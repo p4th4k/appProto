@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Protocol</title>
+    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/pico.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <nav class="site-nav">
+
+            <div class="nav-left">
+                <a href="#">Projects</a>
+                <a href="#">Writeups</a>
+            </div>
+
+            <div class="nav-right">
+                <a class="launch-link" href="#">Github ↗</a>
+            </div>
+
+        </nav>
+    </header>
+
+    <main class="article-shell">
+
+        <a href="#" class="back-link">
+            ← All articles
+        </a>
+
+        <div class="meta">
+            Date Published: May 2026
+        </div>
+
+        <h1>
+            Design & Implementation of Custom Application Layer Protocol
+        </h1>
+        <div class="article-content">
+
+            <p>
+                <strong>appProto</strong> is a custom application-layer protocol implemented in Python using sockets and
+                selectors.
+                The project was built to explore how communication protocols are designed and implemented on top of TCP
+                within a
+                multi-user client-server environment.
+            </p>
+
+            <p>
+                Rather than relying on existing communication frameworks, the objective was to gain a deeper
+                understanding of how
+                applications structure, serialize, transmit, and process messages across a network. Through this
+                project, I gained
+                practical experience with protocol design, event-driven networking, and concurrent client management.
+            </p>
+
+            <h2>Motivation</h2>
+
+            <p>
+                While studying computer networking, I became interested in how real-world applications communicate over
+                networks.
+                Protocols such as HTTP, SMTP, and FTP define rules for how data is structured and exchanged between
+                systems.
+            </p>
+
+            <p>
+                To better understand these concepts, I decided to design and implement a custom application-layer
+                protocol from
+                scratch. The goal was not simply to send data between a client and server, but to create a structured
+                message
+                format that could be consistently interpreted by both sides of the communication channel.
+            </p>
+
+            <h2>Technical Concepts Explored</h2>
+
+            <ul>
+                <li>Application-layer protocol design</li>
+                <li>TCP socket programming</li>
+                <li>Client-server architecture</li>
+                <li>Event-driven I/O</li>
+                <li>Python selectors module</li>
+                <li>Non-blocking networking</li>
+                <li>Message framing and serialization</li>
+                <li>Concurrent client management</li>
+                <li>Network protocol implementation</li>
+            </ul>
+
+            <h2>Architecture</h2>
+
+            <p>
+                The project follows a centralized client-server architecture where multiple clients communicate with a
+                single
+                server. Acting as a communication hub, the server manages all active client connections simultaneously.
+            </p>
+
+            <p>
+                Instead of creating a dedicated thread for every client, the server leverages Python's
+                <code>selectors</code> module to efficiently monitor multiple sockets and respond to network events as
+                they occur.
+                This event-driven design allows a single server process to handle multiple connections while remaining
+                responsive
+                and scalable.
+            </p>
+
+            <h2>Protocol Design</h2>
+
+            <p>
+                A primary objective of the project was designing a custom message format that enables both the client
+                and server
+                to interpret incoming data reliably.
+            </p>
+
+            <p>
+                The protocol uses a structured messaging format composed of metadata and message content. Before
+                processing a
+                message, the receiver extracts information describing the payload and then handles the content
+                accordingly.
+            </p>
+
+            <p>
+                Metadata such as content length, encoding format, and content type ensures that both communicating
+                parties can
+                correctly interpret transmitted data. Designing this protocol provided valuable exposure to message
+                framing,
+                serialization, protocol specification, and reliable communication over TCP.
+            </p>
+
+            <h2>Features</h2>
+
+            <h3>Custom Application-Layer Protocol</h3>
+
+            <p>
+                Implemented a structured protocol that defines how messages are packaged, transmitted, and interpreted
+                between
+                clients and the server.
+            </p>
+
+            <h3>Multi-Client Support</h3>
+
+            <p>
+                Multiple clients can connect to the server simultaneously and communicate using the same protocol
+                implementation.
+            </p>
+
+            <h3>Event-Driven Networking</h3>
+
+            <p>
+                The server uses Python selectors to monitor multiple sockets concurrently without relying on multiple
+                threads.
+                This approach improves efficiency while simplifying connection management.
+            </p>
+
+            <h3>Structured Message Processing</h3>
+
+            <p>
+                Messages are processed according to protocol-defined metadata, enabling the receiver to determine how
+                incoming
+                data should be handled before interpreting the payload itself.
+            </p>
+
+            <h3>Modular Design</h3>
+
+            <p>
+                Networking logic, protocol handling, and message processing are separated into distinct components,
+                making the
+                codebase easier to maintain and extend.
+            </p>
+
+            <h2>Challenges Encountered</h2>
+
+            <h3>Protocol Design Decisions</h3>
+
+            <p>
+                One of the primary challenges involved determining how messages should be structured and transmitted
+                between
+                communicating systems. This required understanding how real-world protocols define message boundaries
+                and metadata.
+            </p>
+
+            <h3>Managing Multiple Clients</h3>
+
+            <p>
+                Supporting multiple simultaneous connections introduced challenges related to connection management,
+                event
+                handling, and ensuring messages were processed correctly for each client.
+            </p>
+
+            <h3>Message Framing</h3>
+
+            <p>
+                TCP provides a reliable stream of bytes but does not preserve message boundaries. Implementing a custom
+                protocol
+                required designing mechanisms to determine where messages begin and end.
+            </p>
+
+            <h3>Event-Driven Programming</h3>
+
+            <p>
+                Learning and implementing a selectors-based architecture required understanding asynchronous event
+                handling and
+                how network applications efficiently manage multiple active connections.
+            </p>
+
+            <h2>Key Learnings</h2>
+
+            <ul>
+                <li>Application-layer protocol design</li>
+                <li>TCP communication fundamentals</li>
+                <li>Client-server architecture</li>
+                <li>Concurrent connection handling</li>
+                <li>Event-driven programming</li>
+                <li>Message serialization and framing</li>
+                <li>Network software architecture</li>
+            </ul>
+
+            <p>
+                The project provided practical insight into how communication systems are built and how protocols
+                coordinate data
+                exchange between distributed applications. It also strengthened my understanding of networking concepts
+                beyond
+                basic socket communication by introducing protocol design and message-handling considerations.
+            </p>
+
+            <h2>Future Improvements</h2>
+
+            <ul>
+                <li>Authentication and authorization mechanisms</li>
+                <li>Encrypted communication channels</li>
+                <li>Protocol versioning support</li>
+                <li>File transfer capabilities</li>
+                <li>Enhanced error handling and recovery</li>
+                <li>Performance monitoring and logging</li>
+            </ul>
+
+            <h2>Repository</h2>
+
+            <p>
+                Source code is available on GitHub:
+                <a href="https://github.com/p4th4k/appProto" target="_blank">
+                    github.com/p4th4k/appProto
+                </a>
+            </p>
+
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>
+            Made with ❤️ by <a href="https://github.com/p4th4k/">p4th4k</a>
+        </p>
+    </footer>
+</body>
+
+</html>
